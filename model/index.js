@@ -34,9 +34,32 @@ const addContact = async (body) => {
   return record
 }
 
-const removeContact = async (contactId) => {}
+const removeContact = async (contactId) => {
+  const data = await readData()
+  const index = data.findIndex((contact) => contact.id === contactId)
+  if (index !== -1) {
+    const result = data.splice(index, 1)
+    await fs.writeFile(
+      path.join(__dirname, 'contacts.json'),
+      JSON.stringify(data)
+    )
+    return result
+  }
+  return null
+}
 
-const updateContact = async (contactId, body) => {}
+const updateContact = async (contactId, body) => {
+  const data = await readData()
+  const [result] = data.filter((contact) => contact.id === contactId)
+  if (result) {
+    Object.assign(result, body)
+    await fs.writeFile(
+      path.join(__dirname, 'contacts.json'),
+      JSON.stringify(data)
+    )
+  }
+  return result
+}
 
 module.exports = {
   listContacts,
