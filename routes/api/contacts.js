@@ -11,14 +11,22 @@ router.get('/', async (req, res, next) => {
   console.log('Hi')
   try {
     const contacts = await Contacts.listContacts()
-    res.json({ status: 'success', code: 200, data: { contacts } })
+    return res.json({ status: 'success', code: 200, data: { contacts } })
   } catch (e) {
     next(e)
   }
 })
 
 router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  try {
+    const contact = await Contacts.getContactById(req.params.contactId)
+    if (contact) {
+      return res.json({ status: 'success', code: 200, data: { contact } })
+    }
+    res.json({ status: 'error', code: 404, massage: 'Not found' })
+  } catch (e) {
+    next(e)
+  }
 })
 
 router.post('/', async (req, res, next) => {

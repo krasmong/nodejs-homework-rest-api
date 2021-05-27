@@ -1,4 +1,4 @@
-const { writeFile } = require('fs')
+const { writeFile, read } = require('fs')
 const fs = require('fs/promises')
 const path = require('path')
 const { v4: uuid } = require('uuid')
@@ -11,6 +11,12 @@ const readData = async () => {
 
 const listContacts = async () => {
   return await readData()
+}
+
+const getContactById = async (contactId) => {
+  const data = await readData()
+  const [result] = data.filter((contact) => contact.id === contactId)
+  return result
 }
 
 const addContact = async (body) => {
@@ -27,8 +33,6 @@ const addContact = async (body) => {
   )
   return record
 }
-
-const getContactById = async (contactId) => {}
 
 const removeContact = async (contactId) => {}
 
