@@ -13,7 +13,7 @@ const listContacts = async () => {
 
 const getContactById = async (contactId) => {
   const data = await readData()
-  const [result] = data.filter((contact) => contact.id === contactId)
+  const [result] = data.find((contact) => contact.id === contactId)
   return result
 }
 
@@ -48,7 +48,7 @@ const removeContact = async (contactId) => {
 
 const updateContact = async (contactId, body) => {
   const data = await readData()
-  const [result] = data.filter((contact) => contact.id === contactId)
+  const [result] = data.find((contact) => contact.id === contactId)
   if (result) {
     Object.assign(result, body)
     await fs.writeFile(
