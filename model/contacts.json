@@ -58,5 +58,29 @@
     "name": "Alec Howard",
     "email": "Donec.elementum@scelerisquescelerisquedui.net",
     "phone": "(748) 206-2688"
+  },
+  {
+    "id": "6bf3a6a6-2dcc-4276-8190-9fb142e2e399",
+    "name": "test name",
+    "email": "test@test.com",
+    "phone": "(111) 111-1111"
+  },
+  {
+    "id": "8a3ed9a2-c26b-4ea5-9a24-1c22b4444e04",
+    "name": "test2 name",
+    "email": "test2@test2.com",
+    "phone": "(222) 222-2222"
+  },
+  {
+    "id": "dc3d7bd3-4ac3-4c61-a233-3adfe5950d0d",
+    "name": "addContact",
+    "email": "test3@test.com",
+    "phone": "3333333333"
+  },
+  {
+    "id": "575c0bc6-6871-4d85-82ee-79ed08839400",
+    "name": "rename5",
+    "email": "rename@test.com",
+    "phone": "1111111111"
   }
 ]
