@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Contacts = require('../../model')
+const Contacts = require('../../model/contacts')
 const {
   validationCreateContact,
   validationUpdateContact,
@@ -25,6 +25,7 @@ router.get('/:contactId', async (req, res, next) => {
   try {
     const contact = await Contacts.getContactById(req.params.contactId)
     if (contact) {
+      console.log(contact._id.getTimestamp())
       return res.json({ status: 'success', code: 200, data: { contact } })
     }
     return res.json({ status: 'error', code: 404, massage: 'Not found' })
