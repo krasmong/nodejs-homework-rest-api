@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model, SchemaTypes } = require('mongoose')
 const bcrypt = require('bcryptjs')
 const { Subscription } = require('../helpers/constants')
 const SALT_WORK_FACTOR = 8
@@ -28,10 +28,10 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    // owner: {
-    //   type: SchemaTypes.ObjectId,
-    //   ref: 'user',
-    // },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
+    },
   },
   {
     versionKey: false,
