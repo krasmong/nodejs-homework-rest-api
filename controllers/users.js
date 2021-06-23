@@ -53,8 +53,9 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    const contacts = await Users.listContacts()
-    return res.json({ status: 'success', code: 200, data: { contacts } })
+    const id = req.user.id
+    await Users.updateToken(id, null)
+    return res.status(HttpCode.NO_CONTENT).json({})
   } catch (e) {
     next(e)
   }
