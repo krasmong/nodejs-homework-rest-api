@@ -18,8 +18,12 @@
 - Проверка токена. Создаем мидлвар для проверки токена и добавляем его ко всем маршрутам, которые должны быть защищены.
 - Делаем пагинацию с `mongoose-paginate-v2` для коллекции контактов (`GET /contacts?page=1&limit=20`).
 - Делаем сортировку и фильтрацию.
+- Для защиты приложения Express, задавая различные заголовки HTTP подключаем пакет `helmet`. Это не серебряная пуля, но может помочь!
+- Для ограничения повторных запросов к API подключаем пакет `express-rate-limit`
+- Для преобразования типа запроса из строчного в булеан для приложений Express / Connect подключаем пакет `express-query-boolean`.
+- Создаем эндпоинт: `/users/current`
 
-- Пакеты: `bcryptjs`, `jsonwebtoken`, `passport`, `passport-jwt`, `mongoose-paginate-v2`
+- Пакеты: `bcryptjs`, `jsonwebtoken`, `passport`, `passport-jwt`, `mongoose-paginate-v2`, `helmet`, `express-rate-limit`, `express-query-boolean`
 
 ==================================================================================
 

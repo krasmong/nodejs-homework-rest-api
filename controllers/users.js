@@ -51,6 +51,20 @@ const login = async (req, res, next) => {
   }
 }
 
+const current = async (req, res, next) => {
+  try {
+    console.log(req.user)
+    const { email, subscription } = await req.user
+    return res.status(HttpCode.OK).json({
+      status: 'success',
+      code: HttpCode.OK,
+      data: { email, subscription },
+    })
+  } catch (e) {
+    next(e)
+  }
+}
+
 const logout = async (req, res, next) => {
   try {
     const id = req.user.id
@@ -61,4 +75,4 @@ const logout = async (req, res, next) => {
   }
 }
 
-module.exports = { signup, login, logout }
+module.exports = { signup, login, logout, current }
