@@ -1,7 +1,12 @@
 const Users = require('../repositories/users')
 const { HttpCode } = require('../helpers/constants')
 const jwt = require('jsonwebtoken')
+const fs = require('fs/promises')
+const path = require('path')
 require('dotenv').config()
+
+const UploadAvatarService = require('../services/local-upload')
+
 const SECRET_KEY = process.env.SECRET_KEY
 
 const signup = async (req, res, next) => {
@@ -14,12 +19,14 @@ const signup = async (req, res, next) => {
         message: 'Email in use',
       })
     }
-    const { id, name, email, subscription } = await Users.create(req.body)
+    const { id, name, email, subscription, avatarURL } = await Users.create(
+      req.body
+    )
 
     return res.status(HttpCode.CREATED).json({
       status: 'success',
       code: HttpCode.CREATED,
-      data: { id, name, email, subscription },
+      data: { id, name, email, subscription, avatarURL },
     })
   } catch (e) {
     next(e)
@@ -75,4 +82,23 @@ const logout = async (req, res, next) => {
   }
 }
 
-module.exports = { signup, login, logout, current }
+const avatars = async (req, res, next) => {
+  try {
+    const id = req.user.id
+    const uploads = new UploadAvatarService(process.env.AVATARS_OF_USERS)
+    const avatarUrl = await uploads.saveAvatar({ idUser: id, file: req.file })
+    try {
+      await fs.unlink(
+        path.join(process.env.AVATARS_OF_USERS, req.user.avatarURL)
+      )
+    } catch (e) {
+      console.log(e.message)
+    }
+    await Users.updateAvatar(id, avatarUrl)
+    res.json({ status: 'success', code: HttpCode.OK, data: { avatarUrl } })
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { signup, login, logout, current, avatars }

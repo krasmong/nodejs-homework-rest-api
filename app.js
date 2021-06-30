@@ -4,15 +4,18 @@ const cors = require('cors')
 const helmet = require('helmet')
 const rateLimit = require('express-rate-limit')
 const boolParser = require('express-query-boolean')
+const path = require('path')
 const { limiterAPI } = require('./helpers/constants')
-
-// const contactsRouter = require('./routes/api/contacts')
+require('dotenv').config()
+const AVATARS_OF_USERS = process.env.AVATARS_OF_USERS
 
 const app = express()
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
 app.use(helmet())
+app.use('/avatars/', express.static(path.join(__dirname, AVATARS_OF_USERS)))
+app.use(express.static(path.join(__dirname, AVATARS_OF_USERS)))
 app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json({ limit: 10000 }))
@@ -31,9 +34,11 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   const status = err.status || 500
-  res
-    .status(status)
-    .json({ status: 'fail', code: status, message: err.message })
+  res.status(status).json({
+    status: status === 500 ? 'fail' : 'error',
+    code: status,
+    message: err.message,
+  })
 })
 
 process.on('unhandledRejection', (reason, promise) => {
